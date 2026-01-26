@@ -4,7 +4,7 @@ import ProjectCard from "@/components/ProjectCard";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { Instagram, Github, Palette } from "lucide-react";
+import TechStack from "@/components/TechStack";
 
 export default function Home() {
   return (
@@ -12,6 +12,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
+      <TechStack />
 
       {/* Section: Projects */}
       <section id="projects" className="py-24 px-6">
