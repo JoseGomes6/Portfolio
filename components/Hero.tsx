@@ -25,7 +25,14 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight"
         >
-          Building <span className="text-zinc-500">digital</span> experiences.
+          Building <br />
+          <motion.span
+            animate={{ color: ["#3b82f6", "#a855f7", "#3b82f6"] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="text-blue-500"
+          >
+            experiences.
+          </motion.span>
         </motion.h1>
 
         <motion.p
