@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import ProjectCard from "@/components/ProjectCard";
+import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { Instagram, Github, Palette } from "lucide-react";
@@ -10,6 +11,7 @@ export default function Home() {
     <main className="bg-zinc-950 min-h-screen">
       <Navbar />
       <Hero />
+      <About />
 
       {/* Section: Projects */}
       <section id="projects" className="py-24 px-6">
