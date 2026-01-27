@@ -31,3 +31,18 @@ html {
   background: #27272a;
   border-radius: 10px;
 }
+
+.text-reveal-crazy {
+  background: linear-gradient(to right, #3b82f6, #8b5cf6, #ef4444, #3b82f6);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-move 4s linear infinite;
+  display: inline-block;
+
+  /* ADICIONA ISTO PARA RESOLVER O CORTE: */
+  padding: 0 0.15em;
+  margin-left: -0.15em; /* Compensa o padding para não tirar o alinhamento */
+  line-height: 1.2; /* Garante que a altura da linha não corta o topo ou a base */
+}

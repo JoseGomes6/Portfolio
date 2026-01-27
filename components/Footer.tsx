@@ -25,7 +25,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://instagram.com/teu-user"
+            href="https://instagram.com/gomesyrn"
             target="_blank"
             className="text-zinc-400 hover:text-pink-500 transition-colors group"
             title="Instagram"
@@ -37,7 +37,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://behance.net/teu-user"
+            href="https://behance.net/jospedrogomes"
             target="_blank"
             className="text-zinc-400 hover:text-blue-600 transition-colors group"
             title="Behance"
@@ -49,7 +49,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="mailto:teu-email@gmail.com"
+            href="mailto:josepedrogomes106@gmail.com"
             className="text-zinc-400 hover:text-blue-400 transition-colors group"
             title="Email"
           >
