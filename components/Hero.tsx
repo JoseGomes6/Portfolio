@@ -24,11 +24,8 @@ export default function Hero() {
   const sectionRef = useRef(null);
   const [displayText, setDisplayText] = useState("José Gomes");
 
-  // --- LÓGICA DO RATO (LUZ AZUL) ---
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  // Spring para a luz ser suave e não "saltar"
   const shadowX = useSpring(mouseX, { stiffness: 150, damping: 20 });
   const shadowY = useSpring(mouseY, { stiffness: 150, damping: 20 });
 
@@ -42,13 +39,11 @@ export default function Hero() {
     mouseY.set(clientY - top);
   }
 
-  // Template para o gradiente da luz azul
   const spotlightBg = useMotionTemplate`radial-gradient(600px circle at ${shadowX}px ${shadowY}px, rgba(59, 130, 246, 0.15), transparent 80%)`;
 
   useEffect(() => {
     const targetText = "José Gomes";
     let interval: NodeJS.Timeout;
-
     const startScramble = () => {
       let iteration = 0;
       clearInterval(interval);
@@ -80,24 +75,22 @@ export default function Hero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
     <section
       ref={sectionRef}
-      onMouseMove={handleMouseMove} // Ativa o rastreio do rato
+      onMouseMove={handleMouseMove}
+      id="home"
       className="relative min-h-screen flex items-center justify-center bg-[#030303] overflow-hidden px-6"
     >
-      {/* --- CAMADA DA LUZ AZUL (MOUSE) --- */}
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-0"
         style={{ background: spotlightBg }}
       />
 
-      {/* --- BACKGROUND (PARTÍCULAS E GRID) --- */}
       <motion.div
         style={{ opacity, scale }}
         className="absolute inset-0 z-0 pointer-events-none"
@@ -113,15 +106,10 @@ export default function Hero() {
               left: `${p.x}%`,
               top: `${p.y}%`,
             }}
-            animate={{
-              y: [0, -60, 0],
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.2, 1],
-            }}
+            animate={{ y: [0, -60, 0], opacity: [0.2, 0.6, 0.2] }}
             transition={{
               duration: p.duration,
               repeat: Infinity,
-              delay: p.delay,
               ease: "easeInOut",
             }}
           />
@@ -129,27 +117,24 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_85%)]" />
       </motion.div>
 
-      {/* --- CONTEÚDO --- */}
       <motion.div
         style={{ opacity, y: textY }}
-        className="relative z-10 text-center pt-32 md:pt-40"
+        className="relative z-10 text-center pt-32"
       >
-        <div className="flex flex-col items-center select-none">
-          <h1 className="font-[var(--font-space-mono)] text-[14vw] md:text-[10vw] font-bold leading-[1.1] tracking-[-0.04em] uppercase relative text-white">
-            Hey, I´m <br />
-            <span className="text-reveal-crazy tracking-[-0.02em] inline-block mt-6 md:mt-8">
-              {displayText}
-            </span>
-          </h1>
-
-          <div className="mt-20 flex flex-col items-center gap-2 opacity-40">
-            <p className="text-zinc-500 font-mono text-[10px] tracking-[0.5em] uppercase">
-              Creative Developer & Designer
-            </p>
-            <div className="w-px h-12 bg-gradient-to-b from-blue-500 to-transparent" />
-          </div>
+        <h1 className="font-[var(--font-space-mono)] text-[13vw] md:text-[10vw] font-bold leading-[1.1] tracking-[-0.04em] uppercase text-white">
+          Hey, I´m <br />
+          <span className="text-reveal-crazy mt-4 md:mt-6">{displayText}</span>
+        </h1>
+        <div className="mt-20 flex flex-col items-center gap-2 opacity-40">
+          <p className="text-zinc-500 font-mono text-[10px] tracking-[0.5em] uppercase">
+            Creative Developer & Designer
+          </p>
+          <div className="w-px h-12 bg-gradient-to-b from-blue-500 to-transparent" />
         </div>
       </motion.div>
+
+      {/* Máscara de transição para o About */}
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#030303] to-transparent z-20 pointer-events-none" />
 
       <style jsx>{`
         .text-reveal-crazy {
@@ -166,11 +151,9 @@ export default function Hero() {
           color: transparent;
           animation: gradient-move 4s linear infinite;
           display: inline-block;
-          font-family: var(--font-space-mono), monospace;
-          font-weight: 700;
-          filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+          padding: 0 0.1em;
+          filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
         }
-
         @keyframes gradient-move {
           0% {
             background-position: 0% center;
@@ -180,7 +163,6 @@ export default function Hero() {
           }
         }
       `}</style>
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#030303] to-transparent z-20" />
     </section>
   );
 }
