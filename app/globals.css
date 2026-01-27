@@ -41,8 +41,7 @@ html {
   animation: gradient-move 4s linear infinite;
   display: inline-block;
 
-  /* ADICIONA ISTO PARA RESOLVER O CORTE: */
   padding: 0 0.15em;
-  margin-left: -0.15em; /* Compensa o padding para não tirar o alinhamento */
-  line-height: 1.2; /* Garante que a altura da linha não corta o topo ou a base */
+  margin-left: -0.15em;
+  line-height: 1.2;
 }
