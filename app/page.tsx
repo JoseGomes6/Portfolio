@@ -97,22 +97,25 @@ export default function Home() {
               title="Digital & Print Magazine"
               category="Editorial / Hybrid"
               isLatest={true}
-              image="/revista.jpg"
-              description="Uma fusão entre o tátil e o digital. Desenvolvi a plataforma interativa de leitura e a curadoria visual para a edição impressa limitada de 500 exemplares."
+              image="/MagazinePaper.png"
+              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
+              link="https://josegomes6.github.io/NEXUS-WEB/"
             />
             <ProjectCard
               title="Digital & Print Magazine"
               category="Editorial / Hybrid"
               isLatest={true}
-              image="/revista.jpg"
-              description="Uma fusão entre o tátil e o digital. Desenvolvi a plataforma interativa de leitura e a curadoria visual para a edição impressa limitada de 500 exemplares."
+              image="/MagazinePaper.png"
+              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
+              link="https://josegomes6.github.io/NEXUS-WEB/"
             />
             <ProjectCard
               title="Digital & Print Magazine"
               category="Editorial / Hybrid"
               isLatest={true}
-              image="/revista.jpg"
-              description="Uma fusão entre o tátil e o digital. Desenvolvi a plataforma interativa de leitura e a curadoria visual para a edição impressa limitada de 500 exemplares."
+              image="/MagazinePaper.png"
+              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
+              link="https://josegomes6.github.io/NEXUS-WEB/"
             />
           </div>
         </div>
