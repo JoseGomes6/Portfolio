@@ -25,7 +25,6 @@ export default function ProjectCard({
   isLatest,
   link,
 }: ProjectProps) {
-  // Fix para Hydration Mismatch
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -34,8 +33,10 @@ export default function ProjectCard({
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 500, damping: 50 });
-  const springY = useSpring(mouseY, { stiffness: 500, damping: 50 });
+
+  // UNIFICADO: 800/50 para bater com a velocidade da lanterna do Hero/About
+  const springX = useSpring(mouseX, { stiffness: 800, damping: 50 });
+  const springY = useSpring(mouseY, { stiffness: 800, damping: 50 });
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -43,20 +44,18 @@ export default function ProjectCard({
     mouseY.set(clientY - top);
   }
 
+  // UNIFICADO: 350px e rgba(59, 130, 246, 0.1) para consistência visual
   const spotlight = useMotionTemplate`
     radial-gradient(
-      450px circle at ${springX}px ${springY}px,
+      350px circle at ${springX}px ${springY}px,
       rgba(59, 130, 246, 0.15),
       transparent 80%
     )
   `;
 
-  // Se ainda não montou, renderizamos uma versão simplificada sem Framer Motion dinâmico
   if (!mounted) {
     return (
-      <div className="relative block bg-[#0a0a0a] border border-white/5 rounded-4xl overflow-hidden h-137.5">
-        {/* Placeholder estático aqui se necessário */}
-      </div>
+      <div className="relative block bg-[#0a0a0a] border border-white/5 rounded-4xl overflow-hidden h-[550px]" />
     );
   }
 
@@ -71,18 +70,19 @@ export default function ProjectCard({
       viewport={{ once: true }}
       whileHover={{ scale: 0.98 }}
       whileTap={{ scale: 0.95 }}
-      className="group relative block bg-[#0a0a0a] border border-white/5 rounded-4xl overflow-hidden h-137.5 cursor-pointer"
+      // Ajustado bg para bater com o fundo do site mas manter contraste
+      className="group relative block bg-zinc-900/20 border border-white/5 rounded-4xl overflow-hidden h-[550px] cursor-none"
     >
       {/* Badge */}
       {isLatest && (
-        <div className="absolute top-8 right-8 z-30">
+        <div className="absolute top-8 right-8 z-40">
           <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] font-bold uppercase tracking-[0.2em] backdrop-blur-md">
             Latest Project
           </span>
         </div>
       )}
 
-      {/* Background Image */}
+      {/* Background Image & Overlays */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {image ? (
           <Image
@@ -94,16 +94,17 @@ export default function ProjectCard({
         ) : (
           <div className="h-full w-full bg-zinc-900" />
         )}
-        <div className="absolute inset-0 bg-liner-to-t from-black via-black/20 to-transparent z-10" />
+        {/* Gradiente interno do card para garantir leitura do texto */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/40 to-transparent z-10" />
       </div>
 
-      {/* Spotlight - O culpado pela Hydration Mismatch se não fosse pelo 'mounted' */}
+      {/* Spotlight Interno - Z-20 para brilhar sobre a imagem mas sob o texto */}
       <motion.div
         className="pointer-events-none absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{ background: spotlight }}
       />
 
-      {/* Content */}
+      {/* Content - Z-30 */}
       <div className="absolute inset-0 z-30 p-10 flex flex-col justify-end">
         <div className="relative">
           <p className="text-blue-500 font-mono text-[10px] tracking-[0.4em] uppercase mb-3 opacity-80">

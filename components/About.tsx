@@ -32,7 +32,11 @@ export default function About() {
       tech: "Node.js, PostgreSQL, Prisma",
       icon: <Cpu size={20} />,
     },
-    { name: "Tools", tech: "Git, Docker, Figma", icon: <Code2 size={20} /> },
+    {
+      name: "Tools",
+      tech: "Git, Figma, VScode, Photoshop, Illustrater",
+      icon: <Code2 size={20} />,
+    },
   ];
 
   return (
@@ -41,7 +45,7 @@ export default function About() {
       onMouseMove={handleMouseMove}
       className="relative py-32 px-6 bg-[#030303] overflow-hidden"
     >
-      {/* BACKGROUND CONSISTENTE */}
+      {/* BACKGROUND CONSISTENTE COM LANTERNA LOCAL */}
       <motion.div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ background: spotlight }}
@@ -66,21 +70,28 @@ export default function About() {
               About <span className="text-reveal-crazy">Me</span>
             </h2>
 
+            {/* NOVO TEXTO EM INGLÊS - ESEC / FCTUC */}
             <p className="text-zinc-400 text-xl leading-relaxed mb-6 font-light">
-              I&apos;m a passionate{" "}
-              <span className="text-white font-medium">Creative Developer</span>{" "}
-              based in Portugal, dedicated to building digital products that
-              combine clean code with exceptional user experience.
+              With a degree in Communication and Multimedia Design from{" "}
+              <span className="text-white font-medium">ESEC</span>, I have built
+              my career at the intersection of visual aesthetics and software
+              engineering rigor. I bridge the gap between complex code and
+              intuitive user experiences.
             </p>
 
             <p className="text-zinc-500 text-lg leading-relaxed mb-10 font-light">
-              My journey in tech started with a curiosity for how things work on
-              the web, which evolved into a career focused on modern full-stack
-              development.
+              At 24, I prioritize structured code and technical rigor. I am
+              currently pursuing a{" "}
+              <span className="text-blue-400 font-medium">
+                Master&apos;s degree in Design and Multimedia at FCTUC
+              </span>{" "}
+              (University of Coimbra) to further deepen my expertise. As a
+              resilient professional with a fast learning curve, I thrive on
+              solving complex problems and contributing to robust solutions.
             </p>
 
             <div className="flex gap-6">
-              <div className="relative group">
+              {/*<div className="relative group">
                 <div className="absolute -inset-2 bg-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
                 <div className="relative bg-zinc-900/50 border border-white/5 p-5 rounded-2xl">
                   <span className="block text-3xl font-bold text-white tracking-tighter">
@@ -90,12 +101,12 @@ export default function About() {
                     Years Exp.
                   </span>
                 </div>
-              </div>
+              </div>*/}
               <div className="relative group">
                 <div className="absolute -inset-2 bg-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
                 <div className="relative bg-zinc-900/50 border border-white/5 p-5 rounded-2xl">
                   <span className="block text-3xl font-bold text-white tracking-tighter">
-                    15+
+                    10+
                   </span>
                   <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest">
                     Projects

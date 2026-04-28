@@ -28,12 +28,11 @@ export default function Hero() {
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const shadowX = useSpring(mouseX, { stiffness: 150, damping: 20 });
-  const shadowY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+  const smoothX = useSpring(mouseX, { stiffness: 800, damping: 50 });
+  const smoothY = useSpring(mouseY, { stiffness: 800, damping: 50 });
 
   useEffect(() => {
     setIsMounted(true);
-
     const generated = [...Array(25)].map((_, i) => ({
       id: i,
       size: Math.random() * 3 + 1,
@@ -46,7 +45,6 @@ export default function Hero() {
 
     const targetText = "José Gomes";
     let interval: NodeJS.Timeout;
-
     const startScramble = () => {
       let iteration = 0;
       clearInterval(interval);
@@ -70,27 +68,17 @@ export default function Hero() {
         iteration += 1 / 3;
       }, 40);
     };
-
     startScramble();
     return () => clearInterval(interval);
   }, []);
 
-  function handleMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+  function handleMouseMove(e: React.MouseEvent) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   }
 
-  const spotlightBg = useMotionTemplate`radial-gradient(
-    650px circle at ${shadowX}px ${shadowY}px, 
-    rgba(59, 130, 246, 0.12) 0%, 
-    rgba(139, 92, 246, 0.05) 45%,
-    transparent 80%
-  )`;
+  const spotlight = useMotionTemplate`radial-gradient(350px circle at ${smoothX}px ${smoothY}px, rgba(59, 130, 246, 0.1), transparent 80%)`;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -99,84 +87,68 @@ export default function Hero() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       id="home"
-      // SOLUÇÃO: suppressHydrationWarning ignora o atributo webcrx injetado por extensões
-      suppressHydrationWarning
       className="relative min-h-screen flex items-center justify-center bg-[#030303] overflow-hidden px-6"
     >
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ background: spotlightBg }}
-        suppressHydrationWarning
+        className="absolute inset-0 z-20 pointer-events-none"
+        style={{ background: spotlight }}
       />
+
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:45px_45px]" />
+      </div>
 
       <motion.div
         style={{ opacity, scale }}
-        className="absolute inset-0 z-0 pointer-events-none"
-        suppressHydrationWarning
+        className="absolute inset-0 z-10 pointer-events-none"
       >
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-        {/* Só renderiza as partículas após o mount para garantir 0 erros de Math.random */}
         {isMounted &&
           clientParticles.map((p) => (
             <motion.div
               key={p.id}
-              className="absolute bg-blue-400 rounded-full"
+              className="absolute bg-white rounded-full"
               style={{
-                width: p.size,
-                height: p.size,
+                width: p.size + 1,
+                height: p.size + 1,
                 left: `${p.x}%`,
                 top: `${p.y}%`,
-                filter: "blur(1px)",
-                boxShadow: "0 0 10px rgba(59, 130, 246, 0.4)",
+                filter: "blur(0.5px)",
+                boxShadow: `0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(59, 130, 246, 0.4)`,
               }}
-              animate={{
-                y: [0, -40, 0],
-                opacity: [0.1, 0.4, 0.1],
-                scale: [1, 1.2, 1],
-              }}
+              animate={{ y: [0, -80, 0], opacity: [0.4, 1, 0.4] }}
               transition={{
-                duration: p.duration,
+                duration: p.duration * 0.8,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: p.delay,
               }}
             />
           ))}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#030303_90%)]" />
       </motion.div>
 
       <motion.div
-        style={{ opacity, y: textY }}
-        className="relative z-10 text-center pt-32"
-        suppressHydrationWarning
+        style={{ opacity }}
+        className="relative z-30 text-center pt-32"
       >
-        <h1 className="font-[var(--font-space-mono)] text-[12vw] md:text-[9vw] font-bold leading-[1] tracking-tighter uppercase text-white selection:bg-blue-500">
-          Hey, I´m <br />
-          <motion.span
-            className="text-reveal-crazy mt-4 md:mt-2 cursor-default inline-block"
-            // Se não estiver montado, mostra o texto estático "José Gomes" para o SSR
-            // Se estiver montado, ativa o displayText (que tem o efeito glitch)
-            suppressHydrationWarning
-            whileHover={{
-              scale: 1.03,
-              filter: "drop-shadow(0 0 25px rgba(59, 130, 246, 0.6))",
-            }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        <h1 className="font-[var(--font-space-mono)] text-[12vw] md:text-[9vw] font-bold leading-[1.1] tracking-tighter uppercase flex flex-col items-center">
+          <span data-text="Hey, I'm" className="liquid">
+            Hey, I&apos;m
+          </span>
+          <span
+            data-text={isMounted ? displayText : "José Gomes"}
+            className="liquid-color"
           >
             {isMounted ? displayText : "José Gomes"}
-          </motion.span>
+          </span>
         </h1>
-
         <div className="mt-20 flex flex-col items-center gap-4">
-          <p className="text-zinc-500 font-mono text-[10px] md:text-xs tracking-[0.6em] uppercase opacity-60">
+          <p className="text-zinc-500 font-mono text-[10px] md:text-xs tracking-[0.6em] uppercase">
             Creative Developer & Designer
           </p>
           <motion.div
@@ -187,17 +159,55 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#030303] via-[#030303]/80 to-transparent z-20 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#030303] to-transparent z-40 pointer-events-none" />
 
       <style jsx>{`
-        .text-reveal-crazy {
-          background: linear-gradient(to right, #3b82f6, #8b5cf6, #3b82f6);
-          background-size: 200% auto;
+        .liquid,
+        .liquid-color {
+          position: relative;
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          animation: gradient-move 3s linear infinite;
+          display: block;
         }
+
+        .liquid {
+          background-image: linear-gradient(
+            to bottom,
+            #ffffff 40%,
+            #52525b 100%
+          );
+        }
+
+        .liquid-color {
+          background-image: linear-gradient(
+            to right,
+            #3b82f6,
+            #8b5cf6,
+            #ef4444,
+            #3b82f6
+          );
+          background-size: 200% auto;
+          animation: gradient-move 4s linear infinite;
+        }
+
+        .liquid::before,
+        .liquid-color::before {
+          content: attr(data-text);
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0) 45%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          pointer-events: none;
+          z-index: 1;
+        }
+
         @keyframes gradient-move {
           0% {
             background-position: 0% center;

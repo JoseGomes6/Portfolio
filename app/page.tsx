@@ -94,12 +94,12 @@ export default function Home() {
               link="https://josegomes6.github.io/NEXUS-WEB/"
             />
             <ProjectCard
-              title="Digital & Print Magazine"
-              category="Editorial / Hybrid"
+              title="UFO Sightings Monitor"
+              category="Creative Coding / Processing"
               isLatest={true}
-              image="/MagazinePaper.png"
-              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
-              link="https://josegomes6.github.io/NEXUS-WEB/"
+              image="/UFOsighting_mockup.png"
+              description="Tracking the unidentified. This project uses an external API to fetch real-time sighting data, rendered through Processing to create an evolving map of aerial phenomena."
+              link="https://estevaoabreu.github.io/ufo-sightings/"
             />
             <ProjectCard
               title="Digital & Print Magazine"
