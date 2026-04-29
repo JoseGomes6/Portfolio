@@ -34,7 +34,7 @@ export default function About() {
     },
     {
       name: "Tools",
-      tech: "Git, Figma, VScode, Photoshop, Illustrater",
+      tech: "Git, Figma, VScode, Photoshop, Illustrator",
       icon: <Code2 size={20} />,
     },
   ];

@@ -86,12 +86,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <ProjectCard
-              title="Digital & Print Magazine"
-              category="Editorial / Hybrid"
+              title="Weather Dashboard"
+              category="Web Development / API Integration"
               isLatest={true}
-              image="/MagazinePaper.png"
-              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
-              link="https://josegomes6.github.io/NEXUS-WEB/"
+              image="/weatherdashboardmockup.png"
+              description="A real-time atmospheric data visualizer. This dashboard integrates weather APIs to provide accurate forecasts and environmental conditions, featuring a responsive interface designed for clarity and speed."
+              link="https://josegomes6.github.io/Weather-Dashboard/"
             />
             <ProjectCard
               title="UFO Sightings Monitor"
@@ -104,18 +104,18 @@ export default function Home() {
             <ProjectCard
               title="Digital & Print Magazine"
               category="Editorial / Hybrid"
-              isLatest={true}
+              isLatest={false}
               image="/MagazinePaper.png"
               description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
               link="https://josegomes6.github.io/NEXUS-WEB/"
             />
             <ProjectCard
-              title="Digital & Print Magazine"
-              category="Editorial / Hybrid"
-              isLatest={true}
-              image="/MagazinePaper.png"
-              description="A fusion of tactile and digital. I developed the interactive reading platform and provided visual curation for the limited print edition."
-              link="https://josegomes6.github.io/NEXUS-WEB/"
+              title="Liverpool FC Rebrand"
+              category="Branding / Visual Identity"
+              isLatest={false}
+              image="/liverpoolrebrand.png"
+              description="A comprehensive visual overhaul for Liverpool FC. This project explores modernizing a historic identity through minimalist design, custom typography, and a unified brand system across digital and physical touchpoints."
+              link="https://www.behance.net/gallery/186203853/Rebrand-Liverpool-FC"
             />
           </div>
         </div>
